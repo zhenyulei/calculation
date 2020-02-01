@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Binary Tree</title>
+</head>
+<body>
+  <div>排序二叉树</div>
+  <script>
+    function BinaryTree(){
+      var Node = function(key){
+        this.key = key;
+        this.left = null;
+        this.right = null;
+      }
+      //定义根结点
+      var root = null;
+      //插入新节点
+      var insertNode = function(node,newNode){
+          if(newNode.key < node.key){
+            if(node.left === null){
+              node.left = newNode;
+            }else{
+              insertNode(node.left,newNode);
+            }
+          }else{
+            if(node.right === null){
+              node.right = newNode;
+            }else{
+              insertNode(node.right,newNode);
+            }
+          }
+      }
+      this.insert = function(key){
+        var newNode = new Node(key);//新插入的数据转成节点
+        if(root === null){//如果没有根结点
+          root = newNode; // 则把新节点转成根结点
+        } else { //如果有根结点 
+          insertNode(root,newNode);//则进行后面的插入新节点
+        }
+      }
+    }
+    var nodes = [8,3,10,1,6,14,4,7,13];
+    var binaryTree = new BinaryTree();
+    nodes.forEach(function(key){
+      binaryTree.insert(key)
+    })
+  </script>
+</body>
+</html>

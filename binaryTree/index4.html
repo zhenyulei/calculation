@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Binary Tree</title>
+</head>
+<body>
+  <div>后序遍历二叉树</div>
+  <div>以中间节点为参考点，按照左-右-中顺序遍历</div>
+  <div>先看该节点的左节点，再遍历右侧节点，最后遍历该节点</div>
+  <div><a href="https://www.jianshu.com/p/acb33735b933">相关资料</a></div>
+  <img src="https://s2.ax1x.com/2020/02/01/1GmDvn.png" alt="1GmDvn.png" border="0" />
+  <script>
+    function BinaryTree(){
+      var Node = function(key){
+        this.key = key;
+        this.left = null;
+        this.right = null;
+      }
+      //定义根结点
+      var root = null;
+      //插入新节点
+      var insertNode = function(node,newNode){
+          if(newNode.key < node.key){
+            if(node.left === null){
+              node.left = newNode;
+            }else{
+              insertNode(node.left,newNode);
+            }
+          }else{
+            if(node.right === null){
+              node.right = newNode;
+            }else{
+              insertNode(node.right,newNode);
+            }
+          }
+      }
+      this.insert = function(key){
+        var newNode = new Node(key);//新插入的数据转成节点
+        if(root === null){//如果没有根结点
+          root = newNode; // 则把新节点转成根结点
+        } else { //如果有根结点 
+          insertNode(root,newNode);//则进行后面的插入新节点
+        }
+      }
+      //后序遍历二叉树 start
+      this.preOrderTraverse = function(callback){
+        preOrderTraverseNode(root,callback);
+      }
+      var preOrderTraverseNode = function(node,callback){
+        if(node !== null){
+          preOrderTraverseNode(node.left,callback);//一直在递归调用，直到左子树全部执行完毕，
+          preOrderTraverseNode(node.right,callback);
+          //这里递归执行完之后，才进行下一步 callback()
+          callback(node.key);
+        }
+      }
+      //后序遍历二叉树 end
+    } 
+
+    var nodes = [8,3,10,1,6,14,4,7,13];
+    var binaryTree = new BinaryTree();
+    nodes.forEach(function(key){
+      binaryTree.insert(key)
+    })
+    //后序遍历二叉树
+    var callback = function(key){
+      console.log(key);
+    }
+    binaryTree.preOrderTraverse(callback);
+  </script>
+</body>
+</html>
